@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from .models import Post
 from .forms import CommentForm
 
@@ -55,6 +56,8 @@ class PostDetail(View):
             # to know that which post a comment has been left on
             comment.post = post
             comment.save()
+            messages.add_message(
+                request, messages.SUCCESS, 'Comment is awaiting approval')
         else:
             comment_form = CommentForm()
 
